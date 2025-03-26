@@ -2,22 +2,20 @@ package model
 
 import (
 	"time"
-
-	"gorm.io/gorm"
 )
 
 type Customer struct {
-	CustomerID  uint      `gorm:"primaryKey;autoIncrement"`
-	FirstName   string    `gorm:"type:varchar(255);not null"`
-	LastName    string    `gorm:"type:varchar(255);not null"`
-	Email       string    `gorm:"type:varchar(255);unique;not null"`
-	PhoneNumber string    `gorm:"type:varchar(20)"`
-	Address     string    `gorm:"type:varchar(255)"`
-	Password    string    `gorm:"type:varchar(255);not null"`
-	CreatedAt   time.Time `gorm:"autoCreateTime"`
-	UpdatedAt   time.Time `gorm:"autoUpdateTime"`
+	CustomerID  int       `gorm:"column:customer_id;primary_key;AUTO_INCREMENT"`
+	FirstName   string    `gorm:"column:first_name;NOT NULL"`
+	LastName    string    `gorm:"column:last_name;NOT NULL"`
+	Email       string    `gorm:"column:email;NOT NULL"`
+	PhoneNumber string    `gorm:"column:phone_number"`
+	Address     string    `gorm:"column:address"`
+	Password    string    `gorm:"column:password;NOT NULL"`
+	CreatedAt   time.Time `gorm:"column:created_at;default:CURRENT_TIMESTAMP"`
+	UpdatedAt   time.Time `gorm:"column:updated_at;default:CURRENT_TIMESTAMP"`
 }
 
-func MigrateCustomer(db *gorm.DB) {
-	db.AutoMigrate(&Customer{})
+func (m *Customer) TableName() string {
+	return "customer"
 }
